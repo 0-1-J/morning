@@ -50,7 +50,7 @@ wm = WeChatMessage(client)
 wea, temperature = get_weather()
 datas = []
 data1 = {"weather":{"value":wea},"temperature":{"value":temperature},"days":{"value":get_count()},"birthday":{"value":get_birthday()},"words":{"value":get_words(), "color":get_random_color()}}
-data2 = {"words":{"value":get_words(), "color":get_random_color()}
+data2 = {"words":{"value":get_words(), "color":get_random_color()}}
 datas.append(data1)
 datas.append(data2)
 users = user_id.split()
