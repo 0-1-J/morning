@@ -18,7 +18,7 @@ user_id = os.environ["USER_ID"]
 template_id = os.environ["TEMPLATE_ID"]
 
 
-def get_weather():
+def get_weather(city):
   url = "http://autodev.openspeech.cn/csp/api/v2.1/weather?openId=aiuicus&clientType=android&sign=android&city=" + city
   res = requests.get(url).json()
   weather = res['data']['list'][0]
@@ -43,19 +43,28 @@ def get_words():
 def get_random_color():
   return "#%06x" % random.randint(0, 0xFFFFFF)
 
+citys = city.split()
+datas = []
+for index in range(len(citys)):
+    wea, temperature = get_weather(citys[index])
+    data = {}
+    if index==0:
+        data = {"weather":{"value":wea},"temperature":{"value":temperature},"days":{"value":get_count()},"birthday":{"value":get_birthday()},"words":{"value":get_words(), "color":get_random_color()}}
+    else:
+        data = {"weather":{"value":wea},"temperature":{"value":temperature},"words":{"value":get_words(), "color":get_random_color()}}
+    datas.append(data)
 
 client = WeChatClient(app_id, app_secret)
-
 wm = WeChatMessage(client)
 wea, temperature = get_weather()
-datas = []
-data1 = {"weather":{"value":wea},"temperature":{"value":temperature},"days":{"value":get_count()},"birthday":{"value":get_birthday()},"words":{"value":get_words(), "color":get_random_color()}}
-data2 = {"weather":{"value":wea},"temperature":{"value":temperature},"words":{"value":get_words(), "color":get_random_color()}}
-datas.append(data1)
-datas.append(data2)
+# datas = []
+# data1 = {"weather":{"value":wea},"temperature":{"value":temperature},"days":{"value":get_count()},"birthday":{"value":get_birthday()},"words":{"value":get_words(), "color":get_random_color()}}
+# data2 = {"weather":{"value":wea},"temperature":{"value":temperature},"words":{"value":get_words(), "color":get_random_color()}}
+# datas.append(data1)
+# datas.append(data2)
 users = user_id.split()
 templates = template_id.split()
 for index in range(len(users)):
-   wm.send_template(users[index], templates[index], datas[0 if index==0 else 1])
+   wm.send_template(users[index], templates[index], datas[index])
 # res = wm.send_template(user_id, template_id, data)
 # print(res)
