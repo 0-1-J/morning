@@ -56,7 +56,7 @@ for index in range(len(citys)):
 
 client = WeChatClient(app_id, app_secret)
 wm = WeChatMessage(client)
-wea, temperature = get_weather()
+# wea, temperature = get_weather()
 # datas = []
 # data1 = {"weather":{"value":wea},"temperature":{"value":temperature},"days":{"value":get_count()},"birthday":{"value":get_birthday()},"words":{"value":get_words(), "color":get_random_color()}}
 # data2 = {"weather":{"value":wea},"temperature":{"value":temperature},"words":{"value":get_words(), "color":get_random_color()}}
