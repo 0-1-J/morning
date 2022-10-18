@@ -28,6 +28,10 @@ def get_count():
   delta = today - datetime.strptime(start_date, "%Y-%m-%d")
   return delta.days
 
+def get_retired():
+  delta = datetime.strptime("2058-01-01", "%Y-%m-%d") - today
+  return delta.days
+
 def get_birthday():
   next = datetime.strptime(str(date.today().year) + "-" + birthday, "%Y-%m-%d")
   if next < datetime.now():
@@ -50,21 +54,16 @@ for index in range(len(citys)):
     data = {}
     if index==0:
         data = {"weather":{"value":wea},"temperature":{"value":temperature},"days":{"value":get_count()},"birthday":{"value":get_birthday()},"words":{"value":get_words(), "color":get_random_color()}}
+    elif index==4:
+        data =  {"weather":{"value":wea},"temperature":{"value":temperature},"days":{"value":get_retired()},"words":{"value":get_words(), "color":get_random_color()}}
     else:
         data = {"weather":{"value":wea},"temperature":{"value":temperature},"words":{"value":get_words(), "color":get_random_color()}}
     datas.append(data)
 
 client = WeChatClient(app_id, app_secret)
 wm = WeChatMessage(client)
-# wea, temperature = get_weather()
-# datas = []
-# data1 = {"weather":{"value":wea},"temperature":{"value":temperature},"days":{"value":get_count()},"birthday":{"value":get_birthday()},"words":{"value":get_words(), "color":get_random_color()}}
-# data2 = {"weather":{"value":wea},"temperature":{"value":temperature},"words":{"value":get_words(), "color":get_random_color()}}
-# datas.append(data1)
-# datas.append(data2)
+
 users = user_id.split()
 templates = template_id.split()
 for index in range(len(users)):
    wm.send_template(users[index], templates[index], datas[index])
-# res = wm.send_template(user_id, template_id, data)
-# print(res)
