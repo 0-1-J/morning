@@ -7,6 +7,8 @@ import os
 import random
 
 today = datetime.now()
+time = str(date.today())+" "+date.today().strftime("%A")
+
 start_date = os.environ['START_DATE']
 city = os.environ['CITY']
 birthday = os.environ['BIRTHDAY']
@@ -22,7 +24,7 @@ def get_weather(city):
   url = "http://autodev.openspeech.cn/csp/api/v2.1/weather?openId=aiuicus&clientType=android&sign=android&city=" + city
   res = requests.get(url).json()
   weather = res['data']['list'][0]
-  return weather['weather'], math.floor(weather['temp'])
+  return weather['weather'], math.floor(weather['low']), math.floor(weather['high'])
 
 def get_count():
   delta = today - datetime.strptime(start_date, "%Y-%m-%d")
@@ -47,17 +49,18 @@ def get_words():
 def get_random_color():
   return "#%06x" % random.randint(0, 0xFFFFFF)
 
+
 citys = city.split()
 datas = []
 for index in range(len(citys)):
-    wea, temperature = get_weather(citys[index])
+    wea, low, high = get_weather(citys[index])
     data = {}
     if index==0:
-        data = {"weather":{"value":wea},"temperature":{"value":temperature},"days":{"value":get_count()},"birthday":{"value":get_birthday()},"words":{"value":get_words(), "color":get_random_color()}}
+        data = {"time":{"value":time},"city":{"value":citys[index]},"weather":{"value":wea},"low":{"value":low},"high":{"value":high},"days":{"value":get_count()},"birthday":{"value":get_birthday()},"words":{"value":get_words(), "color":get_random_color()}}
     elif index==4:
-        data =  {"weather":{"value":wea},"temperature":{"value":temperature},"days":{"value":get_retired()},"words":{"value":get_words(), "color":get_random_color()}}
+        data = {"time":{"value":time},"city":{"value":citys[index]},"weather":{"value":wea},"low":{"value":low},"high":{"value":high},"days":{"value":get_retired()},"words":{"value":get_words(), "color":get_random_color()}}
     else:
-        data = {"weather":{"value":wea},"temperature":{"value":temperature},"words":{"value":get_words(), "color":get_random_color()}}
+        data = {"time":{"value":time},"city":{"value":citys[index]},"weather":{"value":wea},"low":{"value":low},"high":{"value":high},"words":{"value":get_words(), "color":get_random_color()}}
     datas.append(data)
 
 client = WeChatClient(app_id, app_secret)
