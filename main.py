@@ -5,9 +5,25 @@ from wechatpy.client.api import WeChatMessage, WeChatTemplate
 import requests
 import os
 import random
+from datetime import datetime
+from datetime import timedelta
+from datetime import timezone
 
-today = datetime.now()
-time = str(date.today())+" "+date.today().strftime("%A")
+SHA_TZ = timezone(
+    timedelta(hours=8),
+    name='Asia/Shanghai',
+)
+
+# 协调世界时
+utc_now = datetime.utcnow().replace(tzinfo=timezone.utc)
+# 北京时间
+beijing_now = utc_now.astimezone(SHA_TZ)
+
+today = beijing_now.now()
+time = str(beijing_now.date())+" "+beijing_now.today().strftime("%A")
+
+# today = datetime.now()
+# time = str(date.today())+" "+date.today().strftime("%A")
 
 start_date = os.environ['START_DATE']
 city = os.environ['CITY']
