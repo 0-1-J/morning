@@ -20,7 +20,7 @@ utc_now = datetime.utcnow().replace(tzinfo=timezone.utc)
 beijing_now = utc_now.astimezone(SHA_TZ)
 
 today = beijing_now.now()
-time = str(beijing_now.date())+" "+beijing_now.today().strftime("%A")
+time = str(beijing_now.date())+" "+beijing_now.date().strftime("%A")
 
 # today = datetime.now()
 # time = str(date.today())+" "+date.today().strftime("%A")
