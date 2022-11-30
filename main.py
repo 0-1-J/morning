@@ -71,11 +71,12 @@ def get_random_color():
 
 citys = city.split()
 datas = []
+words_day = '报告：今天依旧也是爱老公的一天'
 for index in range(len(citys)):
     wea, low, high = get_weather(citys[index])
     data = {}
     if index==0:
-        data = {"time":{"value":time},"city":{"value":citys[index]},"weather":{"value":wea},"low":{"value":low},"high":{"value":high},"days":{"value":get_count()},"birthday":{"value":get_birthday()},"words":{"value":get_words(), "color":get_random_color()}}
+        data = {"time":{"value":time,"color":get_random_color()},"city":{"value":citys[index],"color":get_random_color()},"weather":{"value":wea,"color":get_random_color()},"low":{"value":low,"color":get_random_color()},"high":{"value":high,"color":get_random_color()},"days":{"value":get_count(),"color":get_random_color()},"words":{"value":words_day, "color":get_random_color()}}
     elif index==4:
         data = {"time":{"value":time},"city":{"value":citys[index]},"weather":{"value":wea},"low":{"value":low},"high":{"value":high},"days":{"value":get_retired()},"words":{"value":get_words(), "color":get_random_color()}}
     else:
