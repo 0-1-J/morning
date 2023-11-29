@@ -73,7 +73,10 @@ citys = city.split()
 datas = []
 words_day = '报告：今天依旧也是爱老公的一天'
 for index in range(len(citys)):
-    wea, low, high = get_weather(citys[index])
+    wea = 1
+    low =1
+    high = 3
+    # get_weather(citys[index])
     data = {}
     if index==0:
         data = {"time":{"value":time,"color":get_random_color()},"city":{"value":citys[index],"color":get_random_color()},"weather":{"value":wea,"color":get_random_color()},"low":{"value":low,"color":get_random_color()},"high":{"value":high,"color":get_random_color()},"days":{"value":get_count(),"color":get_random_color()},"words":{"value":words_day, "color":get_random_color()}}
