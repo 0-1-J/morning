@@ -90,4 +90,4 @@ wm = WeChatMessage(client)
 users = user_id.split()
 templates = template_id.split()
 for index in range(len(users)):
-   wm.send_template(users[index], templates[index], datas[index])
+   wm.send_template(users[index], template_id, datas[0])
