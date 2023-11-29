@@ -37,10 +37,10 @@ template_id = os.environ["TEMPLATE_ID"]
 
 
 def get_weather(city):
-  url = "http://autodev.openspeech.cn/csp/api/v2.1/weather?openId=aiuicus&clientType=android&sign=android&city=" + city
+  url = "http://t.weather.itboy.net/api/weather/city/101120710" 
   res = requests.get(url).json()
-  weather = res['data']['list'][0]
-  return weather['weather'], math.floor(weather['low']), math.floor(weather['high'])
+  weather = res['data']['forecast'][0]
+  return weather['type'], weather['low'], weather['high'], weather['notice']
 
 def get_count():
   delta = today - datetime.strptime(start_date, "%Y-%m-%d")
@@ -73,13 +73,11 @@ citys = city.split()
 datas = []
 words_day = '报告：今天依旧也是爱老公的一天'
 for index in range(len(citys)):
-    wea = 1
-    low =1
-    high = 3
-    # get_weather(citys[index])
+    wea, low, high, notice =  get_weather(citys[index])
     data = {}
     if index==0:
-        data = {"time":{"value":time,"color":get_random_color()},"city":{"value":citys[index],"color":get_random_color()},"weather":{"value":wea,"color":get_random_color()},"low":{"value":low,"color":get_random_color()},"high":{"value":high,"color":get_random_color()},"days":{"value":get_count(),"color":get_random_color()},"words":{"value":words_day, "color":get_random_color()}}
+        data = {"time":{"value":time,"color":get_random_color()},"city":{"value":citys[index],"color":get_random_color()},"weather":{"value":wea,"color":get_random_color()},"low":{"value":low,"color":get_random_color()},"high":{"value":high,"color":get_random_color()},
+                "days":{"value":get_count(),"color":get_random_color()},"birthday":{"value":get_birthday(),"color":get_random_color()}"words":{"value":notice, "color":get_random_color()}}
     elif index==4:
         data = {"time":{"value":time},"city":{"value":citys[index]},"weather":{"value":wea},"low":{"value":low},"high":{"value":high},"days":{"value":get_retired()},"words":{"value":get_words(), "color":get_random_color()}}
     else:
