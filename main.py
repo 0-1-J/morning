@@ -77,7 +77,7 @@ for index in range(len(citys)):
     data = {}
     if index==0:
         data = {"time":{"value":time,"color":get_random_color()},"city":{"value":citys[index],"color":get_random_color()},"weather":{"value":wea,"color":get_random_color()},"low":{"value":low,"color":get_random_color()},"high":{"value":high,"color":get_random_color()},
-                "days":{"value":get_count(),"color":get_random_color()},"birthday":{"value":get_birthday(),"color":get_random_color()}"words":{"value":notice, "color":get_random_color()}}
+                "days":{"value":get_count(),"color":get_random_color()},"birthday":{"value":get_birthday(),"color":get_random_color()},"words":{"value":notice, "color":get_random_color()}}
     elif index==4:
         data = {"time":{"value":time},"city":{"value":citys[index]},"weather":{"value":wea},"low":{"value":low},"high":{"value":high},"days":{"value":get_retired()},"words":{"value":get_words(), "color":get_random_color()}}
     else:
