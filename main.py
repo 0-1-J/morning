@@ -13,7 +13,7 @@ SHA_TZ = timezone(
     timedelta(hours=8),
     name='Asia/Shanghai',
 )
-
+timezone="Asia/Shanghai"
 # 协调世界时
 utc_now = datetime.utcnow().replace(tzinfo=timezone.utc)
 # 北京时间
@@ -43,7 +43,7 @@ def get_weather(city):
   return weather['type'], weather['low'], weather['high'], weather['notice']
 
 def get_count():
-  delta = today - datetime.strptime(start_date, "%Y-%m-%d")
+  delta = datetime.now(pytz.timezone(timezone)) - datetime.strptime(start_date, "%Y-%m-%d").replace(tzinfo=pytz.timezone(timezone))
   return delta.days
 
 def get_retired():
@@ -51,10 +51,11 @@ def get_retired():
   return delta.days
 
 def get_birthday():
-  next = datetime.strptime(str(date.today().year) + "-" + birthday, "%Y-%m-%d")
-  if next < datetime.now():
+  today1 = datetime.now(pytz.timezone(timezone)).date()
+  next = datetime.strptime(str(today1.year) + "-" + birthday, "%Y-%m-%d").replace(tzinfo=pytz.timezone(timezone))
+  if next < datetime.now(pytz.timezone(timezone)):
     next = next.replace(year=next.year + 1)
-  return (next - today).days
+  return (next - datetime.now(pytz.timezone(timezone))).days
 
 def get_words():
   url = "https://api.shadiao.pro/"
